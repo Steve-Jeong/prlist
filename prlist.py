@@ -66,13 +66,31 @@ def combine_files(directory, files):
     combined_content = []
 
     for file in files:
+        # 파일 경로 생성
         file_path = os.path.join(directory, file)
+
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
 
-            header = f"// {file}\n"
+            # 디렉토리 이름 앞에 './'를 붙임
+            if directory != '.':  # 현재 디렉토리가 아닌 경우에만 접두사 추가
+                header = (f"//#########################################################\n"
+                          f"//\n"
+                          f"// ./{os.path.basename(directory)}/{file}\n"  # 디렉토리 이름 앞에 './' 추가
+                          f"//\n"
+                          f"//*********************************************************\n"
+                          )
+            else: # 현재 디렉토리인경우에는 파일이름만 추가
+                header = (f"//#########################################################\n"
+                          f"//\n"
+                          f"// {file}\n"
+                          f"//\n"
+                          f"//*********************************************************\n"
+                          )
+
             combined_content.append(header + content + "\n\n")
+
         except FileNotFoundError:
             combined_content.append(f"// {file}\n// Error: File not found\n\n")
         except PermissionError:
