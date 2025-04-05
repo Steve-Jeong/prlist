@@ -1,0 +1,10 @@
+.git
+*.pyc
+__pycache__
+node_modules
+*.css
+.prlistignore
+.next
+public
+package-lock.json
+README.md
